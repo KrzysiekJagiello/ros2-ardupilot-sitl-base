@@ -1,11 +1,11 @@
 {
-    "name": "ROS 2 ARDUPILT Env",
+    "name": "ROS 2 Ardupilot Env",
     "build": {
         "dockerfile": "Dockerfile",
         "args": {
             "USERNAME": "ros",
-            "USER_UID": "1000",
-            "USER_GID": "1000"
+            "USER_UID": "1001",
+            "USER_GID": "1001"
         }
     },
     "remoteUser": "ros",
@@ -14,18 +14,29 @@
         "--privileged",
         "--env=DISPLAY=${env:DISPLAY}",
         "--env=QT_X11_NO_MITSHM=1",
-        "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw"
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
+        "--gpus=all",
+        "--env=NVIDIA_VISIBLE_DEVICES=all",
+        "--env=NVIDIA_DRIVER_CAPABILITIES=all"
     ],
+    "portsAttributes": {
+        "5760": { "onAutoForward": "ignore" },
+        "5910": { "onAutoForward": "ignore" },
+        "6760": { "onAutoForward": "ignore" },
+        "9002": { "onAutoForward": "ignore" },
+        "9003": { "onAutoForward": "ignore" }
+    },
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-iot.vscode-ros",
+                "Ranch-Hand-Robotics.rde-ros-2",
                 "ms-vscode.cpptools",
                 "ms-vscode.cpptools-extension-pack",
                 "twxs.cmake",
                 "mhutchie.git-graph"
             ],
             "settings": {
+                "remote.autoForwardPorts": false,
                 "terminal.integrated.profiles.linux": {
                     "bash": {
                         "path": "/bin/bash"
@@ -34,6 +45,5 @@
                 "terminal.integrated.defaultProfile.linux": "bash"
             }
         }
-    },
-    "postCreateCommand": "sudo rosdep update && sudo apt-get update"
+    }
 }
