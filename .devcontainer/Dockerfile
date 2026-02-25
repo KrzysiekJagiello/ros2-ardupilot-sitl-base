@@ -19,12 +19,20 @@ RUN apt-get update && apt-get install -y \
     ros-humble-pcl-ros \
     ros-humble-tf2-geometry-msgs \
     ros-humble-image-transport \
+    ros-humble-mavros \
+    ros-humble-mavros-extras \
     rapidjson-dev \
     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
     && curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list \
     && apt-get update && apt-get install -y gz-harmonic ros-humble-ros-gz libgz-sim8-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Instalacja GeographicLib dla MAVROS
+RUN wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
+    && chmod +x install_geographiclib_datasets.sh \
+    && ./install_geographiclib_datasets.sh \
+    && rm install_geographiclib_datasets.sh
 
 USER $USERNAME
 WORKDIR /home/$USERNAME
