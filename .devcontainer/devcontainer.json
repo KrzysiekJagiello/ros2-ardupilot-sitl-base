@@ -10,6 +10,7 @@
     },
     "remoteUser": "ros",
     "runArgs": [
+        "--name", "ardupilot_sitl",
         "--network=host",
         "--privileged",
         "--env=DISPLAY=${env:DISPLAY}",
@@ -32,7 +33,6 @@
                 "Ranch-Hand-Robotics.rde-ros-2",
                 "ms-vscode.cpptools",
                 "ms-vscode.cpptools-extension-pack",
-                "twxs.cmake",
                 "mhutchie.git-graph"
             ],
             "settings": {
@@ -45,5 +45,7 @@
                 "terminal.integrated.defaultProfile.linux": "bash"
             }
         }
-    }
+    },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ros/ros2_ws,type=bind",
+    "workspaceFolder": "/home/ros/ros2_ws"
 }
